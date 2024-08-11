@@ -57,18 +57,18 @@ function App() {
 
   useEffect(() => {
     if (scrollDirection) {
-      const scrollAmount = scrollDirection === 'left' ? -450 : 450;
+      const scrollAmount = scrollDirection === 'left' ? -200 : 200;
       navRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       setScrollDirection(null); 
     }
   }, [scrollDirection]);
 
   const scrollLeft = () => {
-    navRef.current.scrollBy({ left: -150, behavior: 'smooth' });
+    navRef.current.scrollBy({ left: -200, behavior: 'smooth' });
   };
 
   const scrollRight = () => {
-    navRef.current.scrollBy({ left: 150, behavior: 'smooth' });
+    navRef.current.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
   return (
