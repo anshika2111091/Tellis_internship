@@ -64,11 +64,11 @@ function App() {
   }, [scrollDirection]);
 
   const scrollLeft = () => {
-    navRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    navRef.current.scrollBy({ left: -150, behavior: 'smooth' });
   };
 
   const scrollRight = () => {
-    navRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    navRef.current.scrollBy({ left: 150, behavior: 'smooth' });
   };
 
   return (
