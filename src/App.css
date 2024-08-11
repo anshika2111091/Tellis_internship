@@ -34,28 +34,31 @@ z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   width: 70%;
   margin:0 auto;
   padding-top:30px;
   border-bottom: 1px solid lightgrey;
   box-shadow: 0 4px 4px -4px rgba(0, 0, 0, 0.2);
   padding-bottom:25px;
-overflow: hidden;
+  
 }
 .nav{
-  overflow:hidden;
+ 
+  width: 90%;
+  overflow: hidden;
+
 }
 .arrows{
   display: flex;
   gap:2px;
+ 
 }
 .left-arrow,.right-arrow{
   background-color: hsl(0, 0%, 99%);
   border:none;
   border-radius:50%;
-  width:30px;
-  height: 30px;
+  width:25px;
+  height: 25px;
   font-size: 16px;
 }
 .left-arrow:hover,.right-arrow:hover{
@@ -64,13 +67,11 @@ overflow: hidden;
 
 }
 .navlist{
- padding:10px 5px;
+ padding:10px 0;
 list-style-type: none;
 display: flex;
 gap:2rem;
 padding-left: 5px;
-
-
 
 }
 
@@ -157,4 +158,11 @@ padding-left: 5px;
 }
 .content:hover{
   background-color: hsl(0, 0%, 95%);
+}
+
+@media (max-width: 800px) {
+  .services{
+    width: 90%;
+  }
+
 }

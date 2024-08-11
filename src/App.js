@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-
+import NavLinks from './components/NavLinks';
+import Heading from './components/Heading';
+import Services from './components/Services';
+import Arrows from './components/Arrows';
 function App() {
   const [data, setData] = useState([]);
   const [activeSection, setActiveSection] = useState('');
   const navRef = useRef(null);
-  const [scrollDirection, setScrollDirection] = useState(null); // Track scroll direction
+  const [scrollDirection, setScrollDirection] = useState(null); 
 
   useEffect(() => {
-    fetch('http://localhost:3000/services')
+    fetch('/data.json')
       .then(response => response.json())
-      .then(data => setData(data))
+      .then(data => setData(data.services))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
@@ -56,7 +59,7 @@ function App() {
     if (scrollDirection) {
       const scrollAmount = scrollDirection === 'left' ? -450 : 450;
       navRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      setScrollDirection(null); // Reset scroll direction
+      setScrollDirection(null); 
     }
   }, [scrollDirection]);
 
@@ -71,52 +74,15 @@ function App() {
   return (
     <div className='app'>
       <div className='fixed'>
-        <div className='head'>
-          <h1 className='heading'>Select services</h1>
-        </div>
+       <Heading/>
         <div className='navbar'>
           <nav className='nav' ref={navRef}>
-            <ul className='navlist'>
-              {data.length > 0 ? (
-                data.map((item) => (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.category.toLowerCase().replace(/ /g, '-')}`}
-                      className={activeSection === item.category.toLowerCase().replace(/ /g, '-') ? 'active' : ''}
-                    >
-                      {item.category}
-                    </a>
-                  </li>
-                ))
-              ) : (
-                <li>No services available</li>
-              )}
-            </ul>
+          <NavLinks data={data} activeSection={activeSection}/>
           </nav>
-          <div className='arrows'>
-            <button className='left-arrow' onClick={scrollLeft}>&lt;</button>
-            <button className='right-arrow' onClick={scrollRight}>&gt;</button>
-          </div>
+        <Arrows scrollRight={scrollRight} scrollLeft={scrollLeft}/>
         </div>
       </div>
-      <div className='services'>
-        {data.map(item => (
-          <section id={item.category.toLowerCase().replace(/ /g, '-')} className='mainsection' key={item.id}>
-            <h2 className='sectionheading'>{item.category}</h2>
-            {item.items.map((child, index) => (
-              <div key={index} className='content'>
-                <div className='subcontent'>
-                  <h3 className='title'>{child.title}</h3>
-                  <p className='duration'>{child.duration}</p>
-                  <p className='description'>{child.description}</p>
-                  <p className='price'>{child.price || "$85"}</p>
-                </div>
-                <p className='plus'>+</p>
-              </div>
-            ))}
-          </section>
-        ))}
-      </div>
+    <Services data={data}/>
     </div>
   );
 }
