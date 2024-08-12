@@ -4,10 +4,12 @@ import NavLinks from './components/NavLinks';
 import Heading from './components/Heading';
 import Services from './components/Services';
 import Arrows from './components/Arrows';
+
 function App() {
   const [data, setData] = useState([]);
   const [activeSection, setActiveSection] = useState('');
   const navRef = useRef(null);
+  const observerRef = useRef(null);
   const [scrollDirection, setScrollDirection] = useState(null); 
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function App() {
       threshold: 0.5,
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.id;
@@ -45,15 +47,30 @@ function App() {
     }, options);
 
     sections.forEach(section => {
-      observer.observe(section);
+      observerRef.current.observe(section);
     });
 
     return () => {
       sections.forEach(section => {
-        observer.unobserve(section);
+        observerRef.current.unobserve(section);
       });
     };
   }, [data]);
+
+  const handleLinkClick = (sectionId) => {
+    observerRef.current.disconnect();  // Temporarily disable the observer
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveSection(sectionId);
+    }
+    setTimeout(() => {
+      const sections = document.querySelectorAll('.mainsection');
+      sections.forEach(section => {
+        observerRef.current.observe(section);
+      });
+    }, 1000); // Re-enable observer after scrolling completes
+  };
 
   useEffect(() => {
     if (scrollDirection) {
@@ -77,7 +94,7 @@ function App() {
        <Heading/>
         <div className='navbar'>
           <nav className='nav' ref={navRef}>
-          <NavLinks data={data} activeSection={activeSection}/>
+          <NavLinks data={data} activeSection={activeSection} onLinkClick={handleLinkClick}/>
           </nav>
         <Arrows scrollRight={scrollRight} scrollLeft={scrollLeft}/>
         </div>
