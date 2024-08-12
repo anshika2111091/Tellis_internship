@@ -2,15 +2,14 @@ import React from 'react';
 
 const NavLinks = ({ data, activeSection }) => {
   const handleClick = (id, e) => {
-    e.preventDefault(); // Prevent the default anchor behavior
+    e.preventDefault(); 
     const section = document.getElementById(id);
     if (section) {
-      // Calculate the offset if you have a fixed header
-      const headerOffset = 180; // Adjust this value according to your header height
+     
+      const headerOffset = 180; 
       const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = sectionPosition - headerOffset;
   
-      // Scroll to the adjusted position
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
