@@ -119,33 +119,20 @@ padding-left: 5px;
   position: relative;
   overflow: hidden;
   z-index: 1; /* Ensure text stays above the background */
+  background-color: transparent; /* No background by default */
+  transition: background-color 0.2s ease; /* Smooth transition for color and background */
+}
+.navlist li a.active{
+  background-color: black;
+  color:white;
 }
 
-.navlist li a::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%; /* Start with 0 width */
-  height: 100%;
-  background-color: black; /* Background color for the transition */
-  border-radius: 25px;
-  z-index: -1; /* Positioned behind the text */
-  transition: width 0.6s ease; /* Slow, smooth expansion */
+.navlist li a:hover
+ {
+  background-color: hsl(0, 0%, 95%); /* Background color for hover and active state */
+  color: black; /* Text color for hover and active state */
 }
 
-.navlist li a.active::before,
-.navlist li a:hover::before {
-  width: 100%; /* Expand to full width */
-}
-
-.navlist li a:hover {
-  color: white; /* Text color on hover */
-}
-
-.navlist li a.active {
-  color: white; /* Text color for the active tab */
-}
 
 
 .services{
